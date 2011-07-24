@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<global>
+		<timezone>UTC</timezone>
+		<failonerror>
+			<run>true</run>
+		</failonerror>
+		<project>
+			<name>MindStream</name>
+			<version>1.0</version>
+		</project>
+		<archive>
+			<name>mindstream</name>
+		</archive>
+		<vendor>
+			<name>Eric Blue</name>
+			<url>http://eric-blue.com</url>
+		</vendor>
+	</global>
+	<required>
+		<directory>
+			<project>.</project>
+			<build>build</build>
+			<output>dist</output>
+			<library>lib</library>
+		</directory>
+		<java>
+			<classpath>src</classpath>
+			<source>
+				<directory>src</directory>
+				<filemask>.java</filemask>
+			</source>
+		</java>
+	</required>
+</properties>

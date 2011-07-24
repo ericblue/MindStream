@@ -1,0 +1,43 @@
+# Author: Eric Blue
+# 	url   = http://eric-blue.com/
+#   email = ericblue76 (at) gmail (dot) com
+# Project: Neurosky Mindstream - System tray app to stream EEG data 
+
+[Overview]
+
+Mindstream is a simple java-based system tray app that streams EEG brainwave data from NeuroSky 
+devices (MindWave,MindSet).  The app interfaces to NeuroSky devices using the ThinkGear Socket 
+protocol (connecting on localhost:13854), retrieves data in JSON Format, and can "stream" to 
+other applications.  Mindstream can save the following data:
+
+	* Focus levels 
+		- attention
+		- meditation
+	* EEG values
+		- delta
+		- theta
+		- lowAlpha
+		- highAlpha
+		- lowBeta
+		- highBeta
+		- lowGamma
+		- highGamma
+	* Headset signal strength
+		- poorSignalLevel
+		
+
+Streaming functions will include:
+
+    * Saving EEG data to a CSV File
+    * Listen on a socket and replay data from localhost:13854 
+    	- allowing other applications to connect
+    * Broadcast to a URL - supporting POST/M-POST and streaming real-time data
+    	- future use? Processing Javascript version of the Neurosky BrainWave Visualizer
+    		http://eric-blue.com/2011/07/13/neurosky-brainwave-visualizer/
+    		
+    		
+[Current Status]
+
+- Alpha state
+- Streaming only supports writing to a CSV file
+- Tested on Linux and Windows with Java 1.6 and the MindWave headset 

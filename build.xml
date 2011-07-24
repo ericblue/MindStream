@@ -1,0 +1,45 @@
+<project default="buildMindStream">
+	<xmlproperty file="properties.xml" />
+	<path id="build.classpath">
+		<fileset dir="${properties.required.directory.library}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="${properties.required.directory.build}" />
+	</path>
+	<target name="compile">
+		<copy todir="${properties.required.directory.build}">
+			<fileset dir="${properties.required.java.source.directory}">
+				<include name="**/*.jpg" />
+				<exclude name="log4j.properties" />
+			</fileset>
+		</copy>
+		<mkdir dir="${properties.required.directory.build}" />
+		<javac destdir="${properties.required.directory.build}" nowarn="true" deprecation="on">
+			<src path="${properties.required.java.source.directory}" />
+			<classpath refid="build.classpath" />
+		</javac>
+	</target>
+
+	<target name="jar">
+		<delete file="${properties.required.directory.output}/${properties.global.archive.name}.jar" />
+		<property name="version.num" value="1.00" />
+		<buildnumber file="build.num" />
+		<manifest file="MANIFEST.MF">
+			<attribute name="Built-By" value="${user.name}" />
+			<attribute name="Main-Class" value="com.ericblue.mindstream.systemtray.MindStreamSystemTray" />
+			<section name="${properties.global.project.name}">
+				<attribute name="Implementation-Title" value="${properties.global.project.name}" />
+				<attribute name="Implementation-Version" value="${build.number}" />
+				<attribute name="Implementation-Vendor" value="${properties.global.vendor.name} (${properties.global.vendor.url})" />
+			</section>
+		</manifest>
+		<jar destfile="${properties.required.directory.output}/${properties.global.archive.name}.jar" basedir="build" manifest="MANIFEST.MF" />
+	</target>
+
+	<target name="cleanup">
+		<delete quiet="true" file="MANIFEST.MF" />
+		<delete quiet="true" dir="${properties.required.directory.build}" />
+	</target>
+
+	<target name="buildMindStream" depends="compile,jar,cleanup" />
+</project>
