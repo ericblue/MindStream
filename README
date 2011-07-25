@@ -34,6 +34,14 @@ Streaming functions will include:
     * Broadcast to a URL - supporting POST/M-POST and streaming real-time data
     	- future use? Processing Javascript version of the Neurosky BrainWave Visualizer
     		http://eric-blue.com/2011/07/13/neurosky-brainwave-visualizer/
+    	
+    	
+[Installation]
+
+Currently there is no installer.  You can download the source and/or binary distribution:
+the primary executable (mindstream.jar) is located in the dist directory.  There are 
+helper scripts to execute loading the app (mindstream.sh for Linux/Mac and mindstream.bat
+for Windows).  Both scripts simply execute ( java -Djava.ext.dirs=lib -jar dist/mindstream.jar).
     		
     		
 [Current Status]
