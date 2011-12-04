@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import javax.swing.ImageIcon;
@@ -40,9 +39,9 @@ import com.ericblue.mindstream.window.PreferencesWindow;
  * <p>Description:	System tray app for streaming data from the Neurosky MindStream/MindSet</p><br>
  * @author		    <a href="http://eric-blue.com">Eric Blue</a><br>
  *
- * $Date: 2011-07-24 17:54:27 $ 
+ * $Date: 2011-12-04 18:45:42 $ 
  * $Author: ericblue76 $
- * $Revision: 1.5 $
+ * $Revision: 1.7 $
  *
  */
 
@@ -139,8 +138,9 @@ public class MindStreamSystemTray {
 		final CheckboxMenuItem cbConnect = new CheckboxMenuItem("Connect to ThinkGear Socket");
 		final Menu streamMenu = new Menu("MindStream");
 		streamMenu.setEnabled(false);
-		MenuItem broadcastSocketItem = new MenuItem("Broadcast (Socket)");
-		MenuItem broadcastHttpItem = new MenuItem("Broadcast (HTTP)");
+		// Not implemented yet
+		//MenuItem broadcastSocketItem = new MenuItem("Broadcast (Socket)");
+		//MenuItem broadcastHttpItem = new MenuItem("Broadcast (HTTP)");
 		MenuItem saveFileItem = new MenuItem("Save (File)");
 
 		MenuItem exitItem = new MenuItem("Exit");
@@ -153,8 +153,8 @@ public class MindStreamSystemTray {
 		popup.add(viewDebug);
 		popup.add(cbConnect);
 		popup.add(streamMenu);
-		streamMenu.add(broadcastSocketItem);
-		streamMenu.add(broadcastHttpItem);
+		//streamMenu.add(broadcastSocketItem);
+		//streamMenu.add(broadcastHttpItem);
 		streamMenu.add(saveFileItem);
 		popup.addSeparator();
 
@@ -174,7 +174,7 @@ public class MindStreamSystemTray {
 
 		aboutItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "This dialog box is run from the About menu item");
+				JOptionPane.showMessageDialog(null, "Mindstream - https://github.com/ericblue/MindStream");
 			}
 		});
 
@@ -263,13 +263,14 @@ public class MindStreamSystemTray {
 
 				} else if ("Save (File)".equals(item.getLabel())) {
 
-					String message = "Saving file (xyz). Uncheck Connect to ThinkGear Socket to stop.";
+					final String csvFile = PreferenceManager.loadPreferences().get("fileLocation", "");
+					String message = "Saving file " + csvFile + ". Uncheck Connect to ThinkGear Socket to stop.";
 					trayIcon.displayMessage("INFO", message, TrayIcon.MessageType.INFO);
 
 					SwingWorker worker = new SwingWorker<Void, Void>() {
 						public Void doInBackground() {
 
-							String csvFile = PreferenceManager.loadPreferences().get("fileLocation", "");
+							
 							if (csvFile == null) {
 								trayIcon.displayMessage("ERROR", "File location must be set in Preferences!",
 										TrayIcon.MessageType.ERROR);
@@ -291,8 +292,7 @@ public class MindStreamSystemTray {
 								writer.append("DELTA,THETA,LOW_ALPHA,HIGH_ALPHA,LOW_BETA,HIGH_BETA");
 								writer.append("LOW_GAMMA,HIGH_GAMA\n");
 							} catch (IOException e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
+								trayIcon.displayMessage("Write Error", e2.getMessage(), TrayIcon.MessageType.ERROR);
 							}
 
 							SimpleDateFormat fmt = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
@@ -302,37 +302,38 @@ public class MindStreamSystemTray {
 
 								System.out.println(client.getData() + '\n');
 								try {
-
-									JSONObject json = new JSONObject(client.getData());
+                                                                        String clientData = client.getData();
+                                                                        System.out.println(clientData);
+									JSONObject json = new JSONObject(clientData);
 
 									String timeStamp = fmt.format(new Date());
 									writer.append(timeStamp + ',');
-									writer.append(json.getString("poorSignalLevel") + ',');
+									writer.append(Integer.toString(json.getInt("poorSignalLevel")) + ',');
+
 									JSONObject esense = json.getJSONObject("eSense");
 									if (esense != null) {
-										writer.append(esense.getString("attention") + ',');
-										writer.append(esense.getString("meditation") + ',');
+										writer.append(Integer.toString(esense.getInt("attention")) + ',');
+										writer.append(Integer.toString(esense.getInt("meditation")) + ',');
 									}
 
 									JSONObject eegPower = json.getJSONObject("eegPower");
 									if (eegPower != null) {
-										writer.append(eegPower.getString("delta") + ',');
-										writer.append(eegPower.getString("theta") + ',');
-										writer.append(eegPower.getString("lowAlpha") + ',');
-										writer.append(eegPower.getString("highAlpha") + ',');
-										writer.append(eegPower.getString("lowBeta") + ',');
-										writer.append(eegPower.getString("highBeta") + ',');
-										writer.append(eegPower.getString("lowGamma") + ',');
-										writer.append(eegPower.getString("highGamma") + '\n');
+										writer.append(Integer.toString(eegPower.getInt("delta")) + ',');
+										writer.append(Integer.toString(eegPower.getInt("theta")) + ',');
+										writer.append(Integer.toString(eegPower.getInt("lowAlpha")) + ',');
+										writer.append(Integer.toString(eegPower.getInt("highAlpha")) + ',');
+										writer.append(Integer.toString(eegPower.getInt("lowBeta")) + ',');
+										writer.append(Integer.toString(eegPower.getInt("highBeta")) + ',');
+										writer.append(Integer.toString(eegPower.getInt("lowGamma")) + ',');
+										writer.append(Integer.toString(eegPower.getInt("highGamma")) + '\n');
 									}
 
 									writer.flush();
 
 								} catch (JSONException e1) {
-									e1.printStackTrace();
+									trayIcon.displayMessage("JSON Error", e1.getMessage(), TrayIcon.MessageType.ERROR);
 								} catch (IOException e2) {
-									// TODO Auto-generated catch block
-									e2.printStackTrace();
+									trayIcon.displayMessage("Write Error", e2.getMessage(), TrayIcon.MessageType.ERROR);
 								}
 
 							}
@@ -341,8 +342,7 @@ public class MindStreamSystemTray {
 								System.out.println("Closing file...");
 								writer.close();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								trayIcon.displayMessage("Write Error", e.getMessage(), TrayIcon.MessageType.ERROR);
 							}
 
 							return null;
@@ -356,8 +356,8 @@ public class MindStreamSystemTray {
 			}
 		};
 
-		broadcastSocketItem.addActionListener(listener);
-		broadcastHttpItem.addActionListener(listener);
+		//broadcastSocketItem.addActionListener(listener);
+		//broadcastHttpItem.addActionListener(listener);
 		saveFileItem.addActionListener(listener);
 
 		exitItem.addActionListener(new ActionListener() {

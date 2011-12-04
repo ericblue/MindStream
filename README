@@ -48,4 +48,9 @@ for Windows).  Both scripts simply execute ( java -Djava.ext.dirs=lib -jar dist/
 
 - Alpha state
 - Streaming only supports writing to a CSV file
-- Tested on Linux and Windows with Java 1.6 and the MindWave headset 
+- Tested on Linux and Windows with Java 1.6 and the MindWave headset
+
+[Change Log]
+
+- 07/24/11 - Initial release
+- 12/04/11 - Fixed issue reported with saving CSV file (Thanks to Pei Yin) and added some exception handling messages

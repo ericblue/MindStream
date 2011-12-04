@@ -7,7 +7,7 @@
 		</failonerror>
 		<project>
 			<name>MindStream</name>
-			<version>1.0</version>
+			<version>1.01</version>
 		</project>
 		<archive>
 			<name>mindstream</name>
