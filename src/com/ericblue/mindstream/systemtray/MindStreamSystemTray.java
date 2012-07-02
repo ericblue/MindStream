@@ -1,4 +1,3 @@
-
 package com.ericblue.mindstream.systemtray;
 
 import java.awt.AWTException;
@@ -288,8 +287,8 @@ public class MindStreamSystemTray {
 
 							// HEADER
 							try {
-								writer.append("TIMESTAMP,POOR_SIGNAL_LEVEL,ATTENTION,MEDITATION");
-								writer.append("DELTA,THETA,LOW_ALPHA,HIGH_ALPHA,LOW_BETA,HIGH_BETA");
+								writer.append("TIMESTAMP,POOR_SIGNAL_LEVEL,ATTENTION,MEDITATION,");
+								writer.append("DELTA,THETA,LOW_ALPHA,HIGH_ALPHA,LOW_BETA,HIGH_BETA,");
 								writer.append("LOW_GAMMA,HIGH_GAMA\n");
 							} catch (IOException e2) {
 								trayIcon.displayMessage("Write Error", e2.getMessage(), TrayIcon.MessageType.ERROR);
@@ -308,16 +307,37 @@ public class MindStreamSystemTray {
 
 									String timeStamp = fmt.format(new Date());
 									writer.append(timeStamp + ',');
-									writer.append(Integer.toString(json.getInt("poorSignalLevel")) + ',');
-
-									JSONObject esense = json.getJSONObject("eSense");
-									if (esense != null) {
-										writer.append(Integer.toString(esense.getInt("attention")) + ',');
-										writer.append(Integer.toString(esense.getInt("meditation")) + ',');
+									/*
+									 * JH: check for existence of poorSignalLevel. If not available, assume 0									 * 
+									 */
+									if (!json.isNull("poorSignalLevel")){
+										writer.append(Integer.toString(json.getInt("poorSignalLevel")) + ',');
+									}else{
+										writer.append("0,"); 
 									}
 
-									JSONObject eegPower = json.getJSONObject("eegPower");
-									if (eegPower != null) {
+									/*
+									 * JH: check for existence of eSense. 
+									 * I noticed it's possible to get eegPower without eSense when poorSignallevel >0
+									 */
+									if (!json.isNull("eSense")){
+
+										JSONObject esense = json.getJSONObject("eSense");
+										
+										/*
+										 * JH: Don't know if it's possible for these attributes to not exist even 
+										 * when the JSON Object exists
+										 */
+										writer.append(Integer.toString(esense.getInt("attention")) + ',');
+										writer.append(Integer.toString(esense.getInt("meditation")) + ',');
+										
+									} 
+
+									// JH: check just in case it's not there due to poorSignallevel
+									if (!json.isNull("eegPower")){
+										
+										JSONObject eegPower = json.getJSONObject("eegPower");
+										
 										writer.append(Integer.toString(eegPower.getInt("delta")) + ',');
 										writer.append(Integer.toString(eegPower.getInt("theta")) + ',');
 										writer.append(Integer.toString(eegPower.getInt("lowAlpha")) + ',');
@@ -325,8 +345,12 @@ public class MindStreamSystemTray {
 										writer.append(Integer.toString(eegPower.getInt("lowBeta")) + ',');
 										writer.append(Integer.toString(eegPower.getInt("highBeta")) + ',');
 										writer.append(Integer.toString(eegPower.getInt("lowGamma")) + ',');
-										writer.append(Integer.toString(eegPower.getInt("highGamma")) + '\n');
-									}
+										writer.append(Integer.toString(eegPower.getInt("highGamma")));
+										
+									} 
+									
+									// JH: make sure all lines end with \n
+									writer.append('\n'); 
 
 									writer.flush();
 
