@@ -52,5 +52,6 @@ for Windows).  Both scripts simply execute ( java -Djava.ext.dirs=lib -jar dist/
 
 [Change Log]
 
-- 07/24/11 - (v1.0) Initial release
-- 12/04/11 - (v1.01) Fixed issue reported with saving CSV file (Thanks to Pei Yin) and added some exception handling messages
+- 07/24/11 - Initial release
+- 12/04/11 - Fixed issue reported with saving CSV file (Thanks to Pei Yin) and added some exception handling messages
+- 07/07/12 - Added bug fixes from jomack and added additional error checking for issues on other platforms (e.g. Win7)

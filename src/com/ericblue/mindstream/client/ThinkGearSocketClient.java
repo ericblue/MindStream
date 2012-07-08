@@ -1,5 +1,7 @@
 package com.ericblue.mindstream.client;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.CharBuffer;
@@ -13,14 +15,18 @@ import java.util.Scanner;
  * <p>Description:	NeuroSky ThinkGear socket client - supports JSON output</p><br>
  * @author		    <a href="http://eric-blue.com">Eric Blue</a><br>
  *
- * $Date: 2011-07-24 17:54:27 $ 
+ * $Date: 2012-07-08 03:31:28 $ 
  * $Author: ericblue76 $
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  */
 
 
 public class ThinkGearSocketClient {
+    /**
+     * Logger for this class
+     */
+    private static final Logger logger = Logger.getLogger(ThinkGearSocketClient.class);
 
 	public static final String DEFAULT_HOST = "127.0.0.1";
 	public static final int DEFAULT_PORT = 13854;
@@ -79,7 +85,7 @@ public class ThinkGearSocketClient {
 	public void connect() throws IOException {
 
 		if (!this.connected) {
-			System.out.println("Starting new connection...");
+            logger.debug("connect() - Starting new connection...");
 			this.channel = SocketChannel.open(new InetSocketAddress(this.host, this.port));
 
 			CharsetEncoder enc = Charset.forName("US-ASCII").newEncoder();
@@ -89,7 +95,7 @@ public class ThinkGearSocketClient {
 			this.in = new Scanner(channel);
 			this.connected = true;
 		} else {
-			System.out.println("Already connected...");
+            logger.debug("connect() - Already connected...");
 		}
 
 	}
@@ -109,7 +115,8 @@ public class ThinkGearSocketClient {
 	public void close() throws IOException {
 
 		if (this.connected) {
-			System.out.println("Closing connection...");
+            logger.debug("close() - Closing connection...");
+			this.in.close();
 			this.channel.close();
 			this.connected = false;
 		}

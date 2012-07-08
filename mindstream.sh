@@ -14,8 +14,8 @@ if [ -z "$JAVA_HOME" ]
  else
    echo "Using JAVA_HOME: $JAVA_HOME"
    # TODO Fix classpath load issue, rather than load java.ext.dirs
-   # "$JAVA_HOME/bin/java" -cp "$CLASSPATH" -jar $JAR $1 $2
-  "$JAVA_HOME/bin/java" -Djava.ext.dirs=lib -jar $JAR $1 $2 >/tmp/mindstream.log &
+   "$JAVA_HOME/bin/java" -cp "$CLASSPATH" -jar $JAR $1 $2
+  #"$JAVA_HOME/bin/java" -Djava.ext.dirs=lib -jar $JAR $1 $2 >/tmp/mindstream.log &
 fi
 
 

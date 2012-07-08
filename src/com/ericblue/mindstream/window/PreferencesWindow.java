@@ -1,5 +1,7 @@
 package com.ericblue.mindstream.window;
 
+import org.apache.log4j.Logger;
+
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,14 +28,18 @@ import com.ericblue.mindstream.preferences.PreferenceManager;
  * <p>Description:	Preferences Window</p><br>
  * @author		    <a href="http://eric-blue.com">Eric Blue</a><br>
  *
- * $Date: 2011-07-24 17:54:27 $ 
+ * $Date: 2012-07-08 03:31:28 $ 
  * $Author: ericblue76 $
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  */
 
 
 public class PreferencesWindow extends JFrame {
+    /**
+     * Logger for this class
+     */
+    private static final Logger logger = Logger.getLogger(PreferencesWindow.class);
 
 	private JTabbedPane contentPane;
 	private JTextField thinkgearHost;
@@ -53,7 +59,7 @@ public class PreferencesWindow extends JFrame {
 					PreferencesWindow frame = new PreferencesWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("$Runnable.run()", e);
 				}
 			}
 		});
@@ -64,7 +70,7 @@ public class PreferencesWindow extends JFrame {
 	 */
 	public PreferencesWindow() {
 
-		System.out.println("loading prefs...");
+        logger.debug("PreferencesWindow() - loading prefs...");
 		prefs = PreferenceManager.loadPreferences();
 
 		setTitle("Preferences");
@@ -292,7 +298,7 @@ public class PreferencesWindow extends JFrame {
 		if (imgURL != null) {
 			return new ImageIcon(imgURL);
 		} else {
-			System.err.println("Couldn't find file: " + path);
+            logger.error("createImageIcon(String) - Couldn't find file: " + path, null);
 			return null;
 		}
 	}

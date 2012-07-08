@@ -10,7 +10,7 @@
 		<copy todir="${properties.required.directory.build}">
 			<fileset dir="${properties.required.java.source.directory}">
 				<include name="**/*.jpg" />
-				<exclude name="log4j.properties" />
+				<include name="log4j.properties" />
 			</fileset>
 		</copy>
 		<mkdir dir="${properties.required.directory.build}" />
@@ -29,7 +29,7 @@
 			<attribute name="Main-Class" value="com.ericblue.mindstream.systemtray.MindStreamSystemTray" />
 			<section name="${properties.global.project.name}">
 				<attribute name="Implementation-Title" value="${properties.global.project.name}" />
-				<attribute name="Implementation-Version" value="${build.number}" />
+				<attribute name="Implementation-Version" value="${properties.global.project.version}-${build.number}" />
 				<attribute name="Implementation-Vendor" value="${properties.global.vendor.name} (${properties.global.vendor.url})" />
 			</section>
 		</manifest>

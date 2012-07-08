@@ -1,5 +1,7 @@
 package com.ericblue.mindstream.window;
 
+import org.apache.log4j.Logger;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -20,14 +22,18 @@ import javax.swing.border.EmptyBorder;
  * <p>Description:	Displays real-time JSON output from ThinkGear socket</p><br>
  * @author		    <a href="http://eric-blue.com">Eric Blue</a><br>
  *
- * $Date: 2011-07-24 17:54:27 $ 
+ * $Date: 2012-07-08 03:31:28 $ 
  * $Author: ericblue76 $
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  */
 
 
 public class DebugWindow extends JFrame {
+    /**
+     * Logger for this class
+     */
+    private static final Logger logger = Logger.getLogger(DebugWindow.class);
 
 	private JPanel contentPane;
 	private JTextArea textArea;
@@ -42,7 +48,7 @@ public class DebugWindow extends JFrame {
 					DebugWindow frame = new DebugWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("$Runnable.run()", e);
 				}
 			}
 		});
@@ -78,7 +84,7 @@ public class DebugWindow extends JFrame {
 		ActionListener listener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				System.out.println(e.getActionCommand());
+                logger.debug("$ActionListener.actionPerformed(ActionEvent) - " + e.getActionCommand());
 
 				if ("Close".equals(e.getActionCommand())) {
 
