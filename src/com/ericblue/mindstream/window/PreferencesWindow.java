@@ -28,9 +28,9 @@ import com.ericblue.mindstream.preferences.PreferenceManager;
  * <p>Description:	Preferences Window</p><br>
  * @author		    <a href="http://eric-blue.com">Eric Blue</a><br>
  *
- * $Date: 2012-07-08 03:31:28 $ 
+ * $Date: 2014-01-26 19:36:10 $ 
  * $Author: ericblue76 $
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  */
 
@@ -261,20 +261,22 @@ public class PreferencesWindow extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+			    // Note: this code isn't implemented yet.  Temporarily comment out port error checking.
+			    
 				String portErrMsg = "Port must be supplied! Range = [1 - 65535]";
 
 				int port = 0;
-				try {
-					port = Integer.parseInt(broadcastPort.getText());
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, portErrMsg);
-					return;
-				}
-
-				if ((port < 1) || (port > 65535)) {
-					JOptionPane.showMessageDialog(null, portErrMsg);
-					return;
-				}
+//				try {
+//					port = Integer.parseInt(broadcastPort.getText());
+//				} catch (NumberFormatException e) {
+//					JOptionPane.showMessageDialog(null, portErrMsg);
+//					return;
+//				}
+//
+//				if ((port < 1) || (port > 65535)) {
+//					JOptionPane.showMessageDialog(null, portErrMsg);
+//					return;
+//				}
 				prefs.putInt("broadcastPort", port);
 
 				prefs.put("broadcastUrl", broadcastUrl.getText());

@@ -1,6 +1,6 @@
-# Author: Eric Blue
-# 	url   = http://eric-blue.com/
-#   email = ericblue76 (at) gmail (dot) com
+# Author:  Eric Blue
+# Url:     http://eric-blue.com/
+# Email:   ericblue76 (at) gmail (dot) com
 # Project: Neurosky Mindstream - System tray app to stream EEG data 
 
 [Overview]
@@ -28,10 +28,10 @@ other applications.  Mindstream can save the following data:
 
 Streaming functions will include:
 
-    * Saving EEG data to a CSV File
-    * Listen on a socket and replay data from localhost:13854 
+    * [Currently Implemented] Saving EEG data to a CSV File 
+    * [TBD] Listen on a socket and replay data from localhost:13854 
     	- allowing other applications to connect
-    * Broadcast to a URL - supporting POST/M-POST and streaming real-time data
+    * [TBD] Broadcast to a URL - supporting POST/M-POST and streaming real-time data
     	- future use? Processing Javascript version of the Neurosky BrainWave Visualizer
     		http://eric-blue.com/2011/07/13/neurosky-brainwave-visualizer/
     	
@@ -55,3 +55,4 @@ for Windows).  Both scripts simply execute ( java -Djava.ext.dirs=lib -jar dist/
 - 07/24/11 - Initial release
 - 12/04/11 - Fixed issue reported with saving CSV file (Thanks to Pei Yin) and added some exception handling messages
 - 07/07/12 - Added bug fixes from jomack and added additional error checking for issues on other platforms (e.g. Win7)
+- 01/26/14 - Tested with sample output from MindWave mobile

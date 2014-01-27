@@ -1,9 +1,0 @@
-/eegdata.txt/1.1/Sat Jul 16 22:57:12 2011//
-/eegdata_mobile.txt/1.1/Sun Jan 26 18:55:01 2014//
-/get_eeg_data.sh/1.1/Sun Jan 26 18:26:48 2014//
-/parse.pl/-1.1/Sat Jul 16 22:56:18 2011//
-/print_eeg_stream.sh/1.1/Sun Jan 26 19:26:59 2014//
-/printeeg.sh/-1.1/Sun Jul 17 23:43:28 2011//
-/show_json_output.pl/1.1/Sun Jan 26 18:59:29 2014//
-/test_socket_server.pl/1.1/Sun Jan 26 19:11:32 2014//
-/test_socket_server.sh/1.1/Sun Jan 26 19:28:38 2014//

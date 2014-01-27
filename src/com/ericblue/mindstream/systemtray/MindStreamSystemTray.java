@@ -42,9 +42,9 @@ import com.ericblue.mindstream.window.PreferencesWindow;
  * <p>Description:  Description: System tray app for streaming data from the Neurosky MindSet/MindWave</p><br>
  * @author          <a href="http://eric-blue.com">Eric Blue</a><br>
  *
- * $Date: 2012-07-08 03:31:27 $ 
+ * $Date: 2014-01-26 19:36:10 $ 
  * $Author: ericblue76 $
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  *
  */
 
@@ -254,20 +254,25 @@ public class MindStreamSystemTray {
             }
         });
 
+        
+        // FIXME: File seems to not be saving if JSON output is viewed first
+        
         ActionListener listener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 MenuItem item = (MenuItem) e.getSource();
                 // TrayIcon.MessageType type = null;
                 logger.debug("$ActionListener.actionPerformed(ActionEvent) - " + item.getLabel());
-                if ("Broadcast (Socket)".equals(item.getLabel())) {
-                    String message = "Broadcasting socket on port (xyz). Uncheck Connect to ThinkGear Socket to stop.";
-                    trayIcon.displayMessage("INFO", message, TrayIcon.MessageType.INFO);
-
-                } else if ("Broadcast (HTTP)".equals(item.getLabel())) {
-                    String message = "Broadcasting HTTP to url (xyz). Uncheck Connect to ThinkGear Socket to stop.";
-                    trayIcon.displayMessage("INFO", message, TrayIcon.MessageType.INFO);
-
-                } else if ("Save (File)".equals(item.getLabel())) {
+//                if ("Broadcast (Socket)".equals(item.getLabel())) {
+//                    String message = "Broadcasting socket on port (xyz). Uncheck Connect to ThinkGear Socket to stop.";
+//                    trayIcon.displayMessage("INFO", message, TrayIcon.MessageType.INFO);
+//
+//                } else if ("Broadcast (HTTP)".equals(item.getLabel())) {
+//                    String message = "Broadcasting HTTP to url (xyz). Uncheck Connect to ThinkGear Socket to stop.";
+//                    trayIcon.displayMessage("INFO", message, TrayIcon.MessageType.INFO);
+//
+//                } else if ("Save (File)".equals(item.getLabel())) {
+                
+                if ("Save (File)".equals(item.getLabel())) {
 
                     final String csvFile = PreferenceManager.loadPreferences().get("fileLocation", "");
                     String message = "Saving file " + csvFile + ". Uncheck Connect to ThinkGear Socket to stop.";
