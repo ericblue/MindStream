@@ -33,6 +33,7 @@ public class ThinkGearSocketClient {
 
 	private String host;
 	private int port;
+	private boolean rawOutput;
 	private boolean connected;
 	SocketChannel channel;
 	Scanner in;
@@ -54,11 +55,12 @@ public class ThinkGearSocketClient {
 	 * @param host
 	 * @param port
 	 */
-	public ThinkGearSocketClient(String host, int port) {
+	public ThinkGearSocketClient(String host, int port, boolean rawOutput) {
 
 		this.host = host;
 		this.port = port;
 		this.connected = false;
+		this.rawOutput = rawOutput;
 
 	}
 
@@ -89,7 +91,7 @@ public class ThinkGearSocketClient {
 			this.channel = SocketChannel.open(new InetSocketAddress(this.host, this.port));
 
 			CharsetEncoder enc = Charset.forName("US-ASCII").newEncoder();
-			String jsonCommand = "{\"enableRawOutput\": false, \"format\": \"Json\"}\n";
+			String jsonCommand = "{\"enableRawOutput\": " + rawOutput +", \"format\": \"Json\"}\n";
 			this.channel.write(enc.encode(CharBuffer.wrap(jsonCommand)));
 
 			this.in = new Scanner(channel);
