@@ -19,7 +19,7 @@ if "%JAVA_HOME%" == "" (
 ) else (
   echo Java home set to: %JAVA_HOME%
   rem TODO Fix classpath load issue, rather than load java.ext.dirs
-  %JAVA_HOME%\bin\java -Djava.ext.dirs=lib -jar %JAR% %1 %2
+  "%JAVA_HOME%\bin\java" -Djava.ext.dirs=lib -jar %JAR% %1 %2
 )
 
 

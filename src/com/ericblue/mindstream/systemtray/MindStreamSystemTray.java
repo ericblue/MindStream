@@ -127,8 +127,9 @@ public class MindStreamSystemTray {
         // TODO Load default preferences if they haven't been initialized
         String host = PreferenceManager.loadPreferences().get("thinkgearHost", "");
         int port = PreferenceManager.loadPreferences().getInt("thinkgearPort", 0);
-
-        final ThinkGearSocketClient client = new ThinkGearSocketClient(host, port);
+        boolean rawOutput = true; //TODO configure from UI
+        
+        final ThinkGearSocketClient client = new ThinkGearSocketClient(host, port, rawOutput);
 
         final PopupMenu popup = new PopupMenu();
         final TrayIcon trayIcon = new TrayIcon(createImage("images/logo.jpg", "tray icon"));
